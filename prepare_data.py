@@ -28,7 +28,6 @@ def setup(use_data_dir):
         test_qs, test_answers, test_video_ids = get_test_questions()
     print(f'Read {len(train_qs)} training questions and {len(test_qs)} testing questions.')
 
-
     print('\n--- Reading answers...')
     if use_data_dir:
         # Read answers from data/ folder
@@ -49,10 +48,6 @@ def setup(use_data_dir):
 
         #print(frames.shape)
         return frames / 255 - 0.5
-
-#load_and_process_video("test.gif")
-#load_and_process_video("1650.gif")
-#load_and_process_video("1888.gif")
 
     def read_videos(paths):
         # paths is a dict mapping video ID to video path
@@ -91,17 +86,14 @@ def setup(use_data_dir):
     print(f'Vocab Size: {vocab_size}')
     print(tokenizer.word_index)
 
-
     print('\n--- Converting questions to bags of words...')
     train_X_seqs = tokenizer.texts_to_matrix(train_qs)
     test_X_seqs = tokenizer.texts_to_matrix(test_qs)
     print(f'Example question bag of words: {train_X_seqs[0]}')
 
-
     print('\n--- Creating model input images...')
     train_X_vids = np.array([train_vids[id] for id in train_video_ids])
     test_X_vids = np.array([test_vids[id] for id in test_video_ids])
-
 
     print('\n--- Creating model outputs...')
     train_answer_indices = [all_answers.index(a) for a in train_answers]
@@ -113,5 +105,3 @@ def setup(use_data_dir):
     return (train_X_vids, train_X_seqs, train_Y, test_X_vids, test_X_seqs,
             test_Y, vid_shape, vocab_size, num_answers,
             all_answers, test_qs, test_answer_indices)  # for the analyze script
-
-setup(True)
