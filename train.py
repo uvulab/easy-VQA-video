@@ -32,11 +32,11 @@ history = model.fit(
         train_Y,
         validation_data=([test_X_vids, test_X_seqs], test_Y),
         shuffle=True,
-        epochs=32,
+        epochs=3,
         callbacks=[checkpoint],
 )
 
-print(('\n--- Generating plots...')
+print('\n--- Generating plots...')
 plot_loss(history)
 plot_accuracy(history)
 
