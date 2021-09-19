@@ -43,6 +43,7 @@ def plot_confusion(model, X_test, Y_test, labels, filename='confusion_matrix.png
     plt.close()
 
     sns.heatmap(con_mat, annot=True, cmap=plt.cm.Blues, xticklabels=labels, yticklabels=labels)
+    plt.tight_layout()
     plt.title('Confusion Matrix')
     plt.ylabel('True label')
     plt.xlabel('Predicted label')
