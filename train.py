@@ -1,4 +1,4 @@
-from tensorflow.keras.callbacks import ModelCheckpoint
+from tensorflow.keras.callbacks import ModelCheckpoint, EarlyStopping
 import argparse
 from model import build_model
 from prepare_data import setup
@@ -25,6 +25,7 @@ train_X_vids, train_X_seqs, train_Y, test_X_vids, test_X_seqs, test_Y, vid_shape
 print('\n--- Building model...')
 model = build_model(vid_shape, vocab_size, num_answers, args.big_model)
 checkpoint = ModelCheckpoint('model.h5', save_best_only=True)
+es = EarlyStopping(monitor='val_loss', mode='min', patience=5)
 
 print('\n--- Training model...')
 history = model.fit(
@@ -32,8 +33,8 @@ history = model.fit(
         train_Y,
         validation_data=([test_X_vids, test_X_seqs], test_Y),
         shuffle=True,
-        epochs=3,
-        callbacks=[checkpoint],
+        epochs=500,
+        callbacks=[checkpoint, es],
 )
 
 print('\n--- Generating plots...')
