@@ -6,12 +6,12 @@ def build_model(vid_shape, vocab_size, num_answers, big_model):
   # The CNN
   vid_input = Input(shape=vid_shape)
   x1 = Conv3D(8, 3, padding='same')(vid_input)
-  x1 = MaxPooling3D()(x1)
+  x1 = MaxPooling3D(padding='same')(x1)
   x1 = Conv3D(16, 3, padding='same')(x1)
-  x1 = MaxPooling3D()(x1)
+  x1 = MaxPooling3D(padding='same')(x1)
   if big_model:
     x1 = Conv3D(32, 3, padding='same')(x1)
-    x1 = MaxPooling3D()(x1)
+    x1 = MaxPooling3D(padding='same')(x1)
   x1 = Flatten()(x1)
   x1 = Dense(32, activation='tanh')(x1)
 
