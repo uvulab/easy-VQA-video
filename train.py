@@ -1,4 +1,4 @@
-from tensorflow.keras.callbacks import ModelCheckpoint, EarlyStopping
+from tensorflow.keras.callbacks import ModelCheckpoint, EarlyStopping, CSVLogger
 import argparse
 from model import build_model
 from prepare_data import setup
@@ -26,6 +26,7 @@ print('\n--- Building model...')
 model = build_model(vid_shape, vocab_size, num_answers, args.big_model)
 checkpoint = ModelCheckpoint('model.h5', save_best_only=True)
 es = EarlyStopping(monitor='val_loss', mode='min', patience=5)
+csv_logger = CSVLogger('model_log.csv', append=False) # set append=True if continuing training
 
 print('\n--- Training model...')
 history = model.fit(
@@ -34,7 +35,7 @@ history = model.fit(
         validation_data=([test_X_vids, test_X_seqs], test_Y),
         shuffle=True,
         epochs=500,
-        callbacks=[checkpoint, es],
+        callbacks=[checkpoint, es, csv_logger],
 )
 
 print('\n--- Generating plots...')
