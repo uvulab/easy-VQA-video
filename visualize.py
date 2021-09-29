@@ -3,6 +3,7 @@ from tensorflow.keras import Model
 from tensorflow.math import confusion_matrix
 import numpy as np
 import seaborn as sns
+import pandas as pd
 
 def plot_loss(history, filename='model_loss.png'):
     # clear the current firgure
@@ -42,9 +43,12 @@ def plot_confusion(model, X_test, Y_test, labels, filename='confusion_matrix.png
     plt.cla()
     plt.close()
 
-    sns.heatmap(con_mat, annot=True, cmap=plt.cm.Blues, xticklabels=labels, yticklabels=labels)
+    sns.heatmap(con_mat, annot=True, cmap=plt.cm.Blues, xticklabels=labels, yticklabels=labels, fmt="d")
     plt.tight_layout()
     plt.title('Confusion Matrix')
     plt.ylabel('True label')
     plt.xlabel('Predicted label')
     plt.savefig(filename)
+
+def read_csv_log(filename='model_log.csv'):
+    return pd.read_csv(filename, sep=',', engine='python')
