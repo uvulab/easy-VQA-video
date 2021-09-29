@@ -38,12 +38,16 @@ def plot_confusion(model, X_test, Y_test, labels, filename='confusion_matrix.png
     y_pred = np.argmax(y_pred,axis=1)
     con_mat = confusion_matrix(labels=Y_test, predictions=y_pred).numpy()
 
+    # normalize rows
+    sum_of_rows = con_mat.sum(axis=1)
+    normalized_con_mat = con_mat / sum_of_rows[:, np.newaxis]
+
     # clear the current firgure
     plt.clf()
     plt.cla()
     plt.close()
 
-    sns.heatmap(con_mat, annot=True, cmap=plt.cm.Blues, xticklabels=labels, yticklabels=labels, fmt="d")
+    sns.heatmap(normalized_con_mat, annot=True, cmap=plt.cm.Blues, xticklabels=labels, yticklabels=labels, fmt='.2f')
     plt.tight_layout()
     plt.title('Confusion Matrix')
     plt.ylabel('True label')
