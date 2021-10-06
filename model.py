@@ -5,10 +5,10 @@ from tensorflow.keras.optimizers import Adam
 def build_model(vid_shape, vocab_size, num_answers, big_model):
   # The CNN
   vid_input = Input(shape=vid_shape)
-  x1 = Conv3D(8, (3,3,1), padding='same')(vid_input)
-  x1 = MaxPooling3D(pool_size=(2,2,1), padding='same')(x1)
-  x1 = Conv3D(16, (3,3,1), padding='same')(x1)
-  x1 = MaxPooling3D(pool_size=(2,2,1), padding='same')(x1)
+  x1 = Conv3D(8, (1,3,3), padding='same')(vid_input)
+  x1 = MaxPooling3D(pool_size=(1,2,2), padding='same')(x1)
+  x1 = Conv3D(16, (1,3,3), padding='same')(x1)
+  x1 = MaxPooling3D(pool_size=(1,2,2), padding='same')(x1)
   if big_model:
     x1 = Conv3D(32, 3, padding='same')(x1)
     x1 = MaxPooling3D(padding='same')(x1)
@@ -26,6 +26,6 @@ def build_model(vid_shape, vocab_size, num_answers, big_model):
   out = Dense(num_answers, activation='softmax')(out)
 
   model = Model(inputs=[vid_input, q_input], outputs=out)
-  model.compile(Adam(lr=10e-6), loss='categorical_crossentropy', metrics=['accuracy'])
+  model.compile(Adam(lr=5e-4), loss='categorical_crossentropy', metrics=['accuracy'])
 
   return model
