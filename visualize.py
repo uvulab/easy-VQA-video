@@ -28,8 +28,8 @@ def plot_accuracy(history, filename='model_accuracy.png'):
     plt.plot(history.history['accuracy'])
     plt.plot(history.history['val_accuracy'])
     plt.title('Model Accuracy')
-    plt.ylabel('Loss')
-    plt.xlabel('Accuracy')
+    plt.ylabel('Accuracy')
+    plt.xlabel('Epoch')
     plt.legend(['train', 'test'], loc='upper left')
     plt.savefig(filename)
 
