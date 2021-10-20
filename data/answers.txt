@@ -1,15 +1,4 @@
 up
-red
-brown
-yellow
 right
-blue
-black
-triangle
-circle
 down
 left
-rectangle
-gray
-green
-teal
