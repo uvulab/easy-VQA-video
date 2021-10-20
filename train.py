@@ -2,7 +2,7 @@ from tensorflow.keras.callbacks import ModelCheckpoint, EarlyStopping, CSVLogger
 import argparse
 from model import build_model
 from prepare_data import setup
-from visualize import plot_loss, plot_accuracy, plot_confusion
+from visualize import plot_loss, plot_accuracy, plot_confusion, make_heatmap
 from tensorflow.math import confusion_matrix
 
 from PIL import Image, ImageSequence
@@ -44,3 +44,16 @@ plot_accuracy(history)
 
 test_Y = np.argmax(test_Y, axis=1)
 plot_confusion(model, [test_X_vids, test_X_seqs], test_Y, all_answers)
+
+testXvid = test_X_vids[0]
+testXseq = test_X_seqs[0]
+testXvid = np.reshape(testXvid, (1,2,64,64,3))
+testXseq = np.reshape(testXseq, (1, 25))
+testInput = [testXvid, testXseq]
+make_heatmap(model, testInput)
+testXvid = test_X_vids[1]
+testXseq = test_X_seqs[1]
+testXvid = np.reshape(testXvid, (1,2,64,64,3))
+testXseq = np.reshape(testXseq, (1, 25))
+testInput = [testXvid, testXseq]
+make_heatmap(model, testInput, filename='heatmap2.png')

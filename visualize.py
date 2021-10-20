@@ -1,9 +1,12 @@
 import matplotlib.pyplot as plt
 from tensorflow.keras import Model
 from tensorflow.math import confusion_matrix
+from keras import backend as K
+from skimage.transform import resize
 import numpy as np
 import seaborn as sns
 import pandas as pd
+import tensorflow as tf
 
 def plot_loss(history, filename='model_loss.png'):
     # clear the current firgure
@@ -52,6 +55,43 @@ def plot_confusion(model, X_test, Y_test, labels, filename='confusion_matrix.png
     plt.title('Confusion Matrix')
     plt.ylabel('True label')
     plt.xlabel('Predicted label')
+    plt.savefig(filename)
+
+def make_heatmap(model, video, filename='heatmap.png'):
+    prediction = model.predict(video)
+    predicted_class = np.argmax(prediction)
+    conv_layer = model.get_layer('conv3d_1')
+    heatmap_model = Model([model.inputs], [conv_layer.output, model.output])
+    # Get gradient of the winner class w.r.t. the output of the (last) conv. layer
+    with tf.GradientTape() as gtape:
+        conv_output, predictions = heatmap_model(video)
+        loss = predictions[:, np.argmax(predictions[0])]
+        grads = gtape.gradient(loss, conv_output)
+        pooled_grads = K.mean(grads, axis=(0, 1, 2))
+
+    heatmap = tf.reduce_mean(tf.multiply(pooled_grads, conv_output), axis=-1)
+    heatmap = np.maximum(heatmap, 0)
+    max_heat = np.max(heatmap)
+    if max_heat == 0:
+        max_heat = 1e-10
+    heatmap /= max_heat
+
+    firstFrame = heatmap.squeeze()[0]
+    secondFrame = heatmap.squeeze()[1]
+
+    upsample1 = resize(firstFrame, (64,64), preserve_range=True)
+    upsample2 = resize(secondFrame, (64,64), preserve_range=True)
+    vid = video[0] + 0.5
+
+    fig = plt.figure(figsize=(7, 3))
+
+    fig.add_subplot(1, 2, 1)
+    plt.imshow(vid.squeeze()[0])
+    plt.imshow(upsample1,alpha=0.5)
+
+    fig.add_subplot(1, 2, 2)
+    plt.imshow(vid.squeeze()[1])
+    plt.imshow(upsample2,alpha=0.5)
     plt.savefig(filename)
 
 def read_csv_log(filename='model_log.csv'):
