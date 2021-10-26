@@ -37,6 +37,13 @@ def plot_accuracy(history, filename='model_accuracy.png'):
     plt.savefig(filename)
 
 def plot_confusion(model, X_test, Y_test, labels, filename='confusion_matrix.png'):
+    # print the frequencies of each answer
+    print('Label frequencies:')
+    (unique, counts) = np.unique(Y_test, return_counts=True)
+    frequencies = np.asarray(counts)
+    frequencies = np.reshape(frequencies, (frequencies.shape[0], 1))
+    print(frequencies)
+
     y_pred = model.predict(X_test)
     y_pred = np.argmax(y_pred,axis=1)
     con_mat = confusion_matrix(labels=Y_test, predictions=y_pred).numpy()
@@ -58,6 +65,11 @@ def plot_confusion(model, X_test, Y_test, labels, filename='confusion_matrix.png
     plt.savefig(filename)
 
 def make_heatmap(model, video, filename='heatmap.png'):
+    # clear the current firgure
+    plt.clf()
+    plt.cla()
+    plt.close()
+
     prediction = model.predict(video)
     predicted_class = np.argmax(prediction)
     conv_layer = model.get_layer('conv3d_1')
