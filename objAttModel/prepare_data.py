@@ -121,15 +121,17 @@ def setup(use_data_dir):
     train_X_first_objects = []
     train_X_second_objects = []
     for i in range(len(train_objects1)):
-        train_X_first_objects.append(train_objects1[i])
-        train_X_second_objects.append(train_objects2[i])
+        for j in range(4):
+            train_X_first_objects.append(train_objects1[i])
+            train_X_second_objects.append(train_objects2[i])
     train_X_first_objects = np.array(train_X_first_objects)
     train_X_second_objects = np.array(train_X_second_objects)
     test_X_first_objects = []
     test_X_second_objects = []
     for i in range(len(test_objects1)):
-        test_X_first_objects.append(test_objects1[i])
-        test_X_second_objects.append(test_objects2[i])
+        for j in range(4):
+            test_X_first_objects.append(test_objects1[i])
+            test_X_second_objects.append(test_objects2[i])
     test_X_first_objects = np.array(test_X_first_objects)
     test_X_second_objects = np.array(test_X_second_objects)
 
