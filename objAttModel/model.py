@@ -2,52 +2,63 @@ from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Input, Dense, Conv3D, MaxPooling3D, Flatten, Multiply, Add, Dropout
 from tensorflow.keras.optimizers import Adam
 
-def get_encoder(vid_shape, vocab_size, big_model):
+def get_vid_encoder(vid_shape, big_model):
     # The CNN
     vid_input = Input(shape=vid_shape)
-    x1 = Conv3D(8, (2,3,3), padding='same')(vid_input)
-    x1 = MaxPooling3D(pool_size=(1,2,2), padding='same')(x1)
-    x1 = Conv3D(16, (2,3,3), padding='same')(x1)
-    x1 = MaxPooling3D(pool_size=(2,2,2), padding='same')(x1)
+    x = Conv3D(8, 3, padding='same')(vid_input)
+    x = MaxPooling3D(padding='same')(x)
+    x = Conv3D(16, 3, padding='same')(x)
+    x = MaxPooling3D(padding='same')(x)
     if big_model:
-        x1 = Conv3D(32, 3, padding='same')(x1)
-        x1 = MaxPooling3D(padding='same')(x1)
-    x1 = Flatten()(x1)
-    x1 = Dense(32, activation='tanh')(x1)
-    x1 = Dropout(0.4)(x1)
+        x = Conv3D(32, 3, padding='same')(x)
+        x = MaxPooling3D(padding='same')(x)
+    x = Flatten()(x)
+    x = Dense(32, activation='tanh')(x)
+    x = Dropout(0.4)(x)
 
+    out = Dense(32, activation='tanh')(x) #out
+
+    return Model(inputs=vid_input, outputs=out, name='vid_encoder')
+
+def get_question_encoder(vocab_size):
     # The question network
     q_input = Input(shape=(vocab_size,))
-    x2 = Dense(32, activation='tanh')(q_input)
-    x2 = Dense(32, activation='tanh')(x2)
+    x = Dense(32, activation='tanh')(q_input)
+    out = Dense(32, activation='tanh')(x)
 
-    # Merge -> output
-    out = Multiply()([x1, x2])
-    out = Dense(32, activation='tanh')(out)
-
-    return Model(inputs=[vid_input, q_input], outputs=out)
+    return Model(inputs=q_input, outputs=out, name='question_encoder')
 
 def get_score_model():
-    embedding = Input(shape=(32,))
-    x = Dense(32, activation='tanh')(embedding)
-    x = Dense(1, activation='sigmoid')(x)
+    vid_embedding = Input(shape=(32,))
+    q_embedding = Input(shape=(32,))
 
-    return Model(inputs=embedding, outputs=x)
+    # Merge
+    x = Multiply()([vid_embedding, q_embedding])
+
+    # Score
+    x = Dense(32, activation='tanh')(x)
+    out = Dense(1, activation='sigmoid')(x)
+
+    return Model(inputs=[vid_embedding, q_embedding], outputs=out, name='scoring_model')
 
 
 def build_model(vid_shape, vocab_size, num_answers, big_model):
-    # Get fused feature embeddings
+    # Get video embeddings
     vid_input1 = Input(shape=vid_shape)
     vid_input2 = Input(shape=vid_shape)
+    vid_encoder = get_vid_encoder(vid_shape, big_model)
+    v1_embedding = vid_encoder(vid_input1)
+    v2_embedding = vid_encoder(vid_input2)
+
+    # Get question embeddings
     q_input = Input(shape=(vocab_size,))
-    encoder = get_encoder(vid_shape, vocab_size, big_model)
-    v1_embedding = encoder([vid_input1, q_input])
-    v2_embedding = encoder([vid_input2, q_input])
+    q_encoder = get_question_encoder(vocab_size)
+    q_embedding = q_encoder(q_input)
 
     # Get each object's score
     scoring_model = get_score_model()
-    v1_score = scoring_model(v1_embedding)
-    v2_score = scoring_model(v2_embedding)
+    v1_score = scoring_model([v1_embedding, q_embedding])
+    v2_score = scoring_model([v2_embedding, q_embedding])
 
 
     # Merge -> output
