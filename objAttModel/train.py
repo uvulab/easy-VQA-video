@@ -44,7 +44,7 @@ plot_loss(history)
 plot_accuracy(history)
 
 test_Y = np.argmax(test_Y, axis=1)
-plot_confusion(model, [test_X_vids, test_X_seqs], test_Y, all_answers)
+plot_confusion(model, [train_X_first_objects, train_X_second_objects, train_X_seqs], test_Y, all_answers)
 
 #testXvid = test_X_vids[0]
 #testXseq = test_X_seqs[0]
