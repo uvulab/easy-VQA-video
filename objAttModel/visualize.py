@@ -108,3 +108,40 @@ def make_heatmap(model, video, filename='heatmap.png'):
 
 def read_csv_log(filename='model_log.csv'):
     return pd.read_csv(filename, sep=',', engine='python')
+
+def log_to_plots(filename='model_log.csv'):
+    log = read_csv_log(filename)
+
+    acc = log.iloc[:,1].values
+    loss = log.iloc[:,2].values
+    val_acc = log.iloc[:,3].values
+    val_loss = log.iloc[:,4].values
+
+    # Plot loss
+    plt.clf()
+    plt.cla()
+    plt.close()
+
+    plt.plot(loss)
+    plt.plot(val_loss)
+    plt.title('Model Loss')
+    plt.ylabel('Loss')
+    plt.xlabel('Epoch')
+    plt.legend(['train', 'test'], loc='upper right')
+    plt.savefig('model_loss.png')
+
+    # Plot accuracy
+    plt.clf()
+    plt.cla()
+    plt.close()
+
+    plt.plot(acc)
+    plt.plot(val_acc)
+    plt.title('Model Accuracy')
+    plt.ylabel('Accuracy')
+    plt.xlabel('Epoch')
+    plt.legend(['train', 'test'], loc='upper left')
+    plt.savefig('model_accuracy.png')
+    
+
+log_to_plots()
