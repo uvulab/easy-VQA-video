@@ -65,6 +65,7 @@ def build_model(vid_shape, vocab_size, num_answers, big_model):
     v1_att = Multiply()([v1_embedding, v1_score])
     v2_att = Multiply()([v2_embedding, v2_score])
     out = Add()([v1_att, v2_att])
+    out = Multiply()([out, q_embedding])
     out = Dense(32, activation='tanh')(out)
     out = Dense(num_answers, activation='softmax')(out)
 
