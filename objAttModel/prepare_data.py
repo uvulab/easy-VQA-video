@@ -116,8 +116,13 @@ def setup(use_data_dir):
     print(f'Example question bag of words: {train_X_seqs[0]}')
 
     print('\n--- Creating model input images...')
+    train_X_first_objects = np.array([train_objects1[id] for id in train_video_ids])
+    train_x_second_objects = np.array([train_objects2[id] for id in train_video_ids])
+    test_X_first_objects = np.array([test_objects1[id] for id in test_video_ids])
+    test_X_second_objects = np.array([test_objects2[id] for id in test_video_ids])
     #print(f'train_videa_ids type: {type(train_video_ids)}')
     #train_X_vids = []
+    """
     train_X_first_objects = []
     train_X_second_objects = []
     for i in range(len(train_objects1)):
@@ -134,6 +139,7 @@ def setup(use_data_dir):
             test_X_second_objects.append(test_objects2[i])
     test_X_first_objects = np.array(test_X_first_objects)
     test_X_second_objects = np.array(test_X_second_objects)
+    """
 
     #train_X_vids = np.array([train_vids[id] for id in train_video_ids])
     #test_X_vids = np.array([test_vids[id] for id in test_video_ids])
@@ -148,3 +154,5 @@ def setup(use_data_dir):
     return (train_X_first_objects, train_X_second_objects, train_X_seqs, train_Y, test_X_first_objects, test_X_second_objects,
             test_X_seqs, test_Y, vid_shape, vocab_size, num_answers,
             all_answers, test_qs, test_answer_indices)  # for the analyze script
+
+setup(True)
