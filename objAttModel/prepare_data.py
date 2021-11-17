@@ -117,7 +117,7 @@ def setup(use_data_dir):
 
     print('\n--- Creating model input images...')
     train_X_first_objects = np.array([train_objects1[id] for id in train_video_ids])
-    train_x_second_objects = np.array([train_objects2[id] for id in train_video_ids])
+    train_X_second_objects = np.array([train_objects2[id] for id in train_video_ids])
     test_X_first_objects = np.array([test_objects1[id] for id in test_video_ids])
     test_X_second_objects = np.array([test_objects2[id] for id in test_video_ids])
     #print(f'train_videa_ids type: {type(train_video_ids)}')
@@ -143,6 +143,11 @@ def setup(use_data_dir):
 
     #train_X_vids = np.array([train_vids[id] for id in train_video_ids])
     #test_X_vids = np.array([test_vids[id] for id in test_video_ids])
+    print(test_X_first_objects.shape)
+    print(test_X_second_objects.shape)
+    for i in range(8):
+        print(test_X_seqs[i])
+
 
     print('\n--- Creating model outputs...')
     train_answer_indices = [all_answers.index(a) for a in train_answers]
