@@ -121,7 +121,7 @@ def setup(use_data_dir):
     train_X_first_objects = []
     train_X_second_objects = []
     for i in range(len(train_objects1)):
-        for j in range(4):
+        for j in range(14): # the number of questions (7 for each object)
             train_X_first_objects.append(train_objects1[i])
             train_X_second_objects.append(train_objects2[i])
     train_X_first_objects = np.array(train_X_first_objects)
@@ -129,7 +129,7 @@ def setup(use_data_dir):
     test_X_first_objects = []
     test_X_second_objects = []
     for i in range(len(test_objects1)):
-        for j in range(4):
+        for j in range(14): # the number of questions (7 for each object)
             test_X_first_objects.append(test_objects1[i])
             test_X_second_objects.append(test_objects2[i])
     test_X_first_objects = np.array(test_X_first_objects)
