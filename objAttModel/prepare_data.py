@@ -143,11 +143,6 @@ def setup(use_data_dir):
 
     #train_X_vids = np.array([train_vids[id] for id in train_video_ids])
     #test_X_vids = np.array([test_vids[id] for id in test_video_ids])
-    print(test_X_first_objects.shape)
-    print(test_X_second_objects.shape)
-    for i in range(8):
-        print(test_X_seqs[i])
-
 
     print('\n--- Creating model outputs...')
     train_answer_indices = [all_answers.index(a) for a in train_answers]
@@ -160,4 +155,3 @@ def setup(use_data_dir):
             test_X_seqs, test_Y, vid_shape, vocab_size, num_answers,
             all_answers, test_qs, test_answer_indices)  # for the analyze script
 
-setup(True)
