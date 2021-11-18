@@ -7,6 +7,7 @@ from tensorflow.math import confusion_matrix
 
 from PIL import Image, ImageSequence
 import numpy as np
+import math
 
 # Support command-line options
 parser = argparse.ArgumentParser()
@@ -34,7 +35,7 @@ def step_decay(epoch):
    drop = 0.5
    epochs_drop = 10.0
    lrate = initial_lrate * math.pow(drop,
-           math.floor((1+epoch)/epochs_drop))
+        math.floor((1+epoch)/epochs_drop))
    return lrate
 lrate = LearningRateScheduler(step_decay)
 
