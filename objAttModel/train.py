@@ -1,4 +1,4 @@
-from tensorflow.keras.callbacks import ModelCheckpoint, EarlyStopping, CSVLogger LearningRateScheduler
+from tensorflow.keras.callbacks import ModelCheckpoint, EarlyStopping, CSVLogger, LearningRateScheduler
 import argparse
 from model import build_model
 from prepare_data import setup
