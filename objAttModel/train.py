@@ -1,4 +1,4 @@
-from tensorflow.keras.callbacks import ModelCheckpoint, EarlyStopping, CSVLogger
+from tensorflow.keras.callbacks import ModelCheckpoint, EarlyStopping, CSVLogger LearningRateScheduler
 import argparse
 from model import build_model
 from prepare_data import setup
@@ -29,6 +29,15 @@ checkpoint = ModelCheckpoint('model.h5', save_best_only=True)
 es = EarlyStopping(monitor='val_loss', mode='min', patience=5)
 csv_logger = CSVLogger('model_log.csv', append=False) # set append=True if continuing training
 
+def step_decay(epoch):
+   initial_lrate = 0.1
+   drop = 0.5
+   epochs_drop = 10.0
+   lrate = initial_lrate * math.pow(drop,
+           math.floor((1+epoch)/epochs_drop))
+   return lrate
+lrate = LearningRateScheduler(step_decay)
+
 print('\n--- Training model...')
 history = model.fit(
         [train_X_first_objects, train_X_second_objects, train_X_seqs],
@@ -36,7 +45,7 @@ history = model.fit(
         validation_data=([test_X_first_objects, test_X_second_objects, test_X_seqs], test_Y),
         shuffle=True,
         epochs=500,
-        callbacks=[checkpoint, es, csv_logger],
+        callbacks=[checkpoint, es, csv_logger, lrate],
 )
 
 print('\n--- Generating plots...')
