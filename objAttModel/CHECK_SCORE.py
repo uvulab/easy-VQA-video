@@ -11,7 +11,7 @@ def check_scores(filename='model.h5'):
     # Load model
     #model = build_model(vid_shape, vocab_size, num_answers, args.big_model)
     model = load_model(filename)
-    score_extractor = Model(inputs=model.input, outputs=model.get_layer('scoring_model').output)
+    score_extractor = Model(inputs=model.input, outputs=model.get_layer('add_layer').output)
     scores = score_extractor.predict([test_X_first_objects, test_X_second_objects, test_X_seqs])
     print(scores)
 
