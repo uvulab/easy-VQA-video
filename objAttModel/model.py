@@ -37,7 +37,7 @@ def get_score_model():
 
     # Score
     x = Dense(32, activation='tanh')(x)
-    out = Dense(1, activation='sigmoid')(x)
+    out = Dense(1, activation='sigmoid', name='score_output')(x)
 
     return Model(inputs=[vid_embedding, q_embedding], outputs=out, name='scoring_model')
 
