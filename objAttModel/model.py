@@ -57,8 +57,8 @@ def build_model(vid_shape, vocab_size, num_answers, big_model):
 
     # Get each object's score
     scoring_model = get_score_model()
-    v1_score = scoring_model([v1_embedding, q_embedding])
-    v2_score = scoring_model([v2_embedding, q_embedding])
+    v1_score = scoring_model([v1_embedding, q_embedding], name='v1_score')
+    v2_score = scoring_model([v2_embedding, q_embedding], name = 'v2_score')
 
 
     # Merge -> output
