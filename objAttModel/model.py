@@ -37,7 +37,7 @@ def get_score_model():
 
     # Score
     x = Dense(32, activation='tanh')(x)
-    out = Dense(1, activation='sigmoid', name='score_output')(x)
+    out = Dense(1, activation='sigmoid')(x)
 
     return Model(inputs=[vid_embedding, q_embedding], outputs=out, name='scoring_model')
 
@@ -57,8 +57,8 @@ def build_model(vid_shape, vocab_size, num_answers, big_model):
 
     # Get each object's score
     scoring_model = get_score_model()
-    v1_score = scoring_model([v1_embedding, q_embedding], name='v1_score')
-    v2_score = scoring_model([v2_embedding, q_embedding], name = 'v2_score')
+    v1_score = scoring_model([v1_embedding, q_embedding])
+    v2_score = scoring_model([v2_embedding, q_embedding])
 
 
     # Merge -> output
