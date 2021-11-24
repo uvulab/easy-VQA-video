@@ -13,10 +13,10 @@ def check_scores(filename='model.h5'):
     model = load_model(filename)
     model.summary()
     score1_extractor = Model(inputs=model.input, outputs=model.get_layer('scoring_model').get_output_at(0))
-    #score2_extractor = Model(inputs=model.input, outputs=model.get_layer('v2_score').output)
+    score2_extractor = Model(inputs=model.input, outputs=model.get_layer('scoring_model').get_output_at(1))
     scores1 = score1_extractor.predict([test_X_first_objects, test_X_second_objects, test_X_seqs])
-    #scores2 = score1_extractor.predict([test_X_first_objects, test_X_second_objects, test_X_seqs])
+    scores2 = score1_extractor.predict([test_X_first_objects, test_X_second_objects, test_X_seqs])
     print(scores1)
-    #print(scores2)
+    print(scores2)
 
 check_scores()
