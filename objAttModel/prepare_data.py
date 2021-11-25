@@ -155,6 +155,7 @@ def setup(use_data_dir):
 
     print(f'all_answers: {all_answers}')
     print(f'train_Y[0]: {train_Y[0]}')
+    quit()
 
     return (train_X_first_objects, train_X_second_objects, train_X_seqs, train_Y, test_X_first_objects, test_X_second_objects,
             test_X_seqs, test_Y, vid_shape, vocab_size, num_answers,
