@@ -141,7 +141,7 @@ def setup(use_data_dir):
     test_X_second_objects = np.array(test_X_second_objects)
     """
     print(f'train_video_ids[0]: {train_video_ids[0]}')
-    print(f'Does train_objects1[0] == train_objects2[0]?: {train_objects1[0] == train_objects2[0]}')
+    print(f'Does train_objects1[0] == train_objects2[0]?: {np.array_equal(train_objects1[0], train_objects2[0])}')
 
     #train_X_vids = np.array([train_vids[id] for id in train_video_ids])
     #test_X_vids = np.array([test_vids[id] for id in test_video_ids])
