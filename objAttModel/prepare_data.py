@@ -155,13 +155,6 @@ def setup(use_data_dir):
     for i in range(8):
         print(f'train_video_ids[i]: {train_video_ids[i]}')
         print(f'train_Y[i]: {train_Y[i]}')
-    # save the first two objects as a gif
-    from moviepy.editor import ImageSequenceClip
-    clip = ImageSequenceClip(list(train_X_first_objects), fps=5)
-    clip.write_gif('first_object.gif', fps=5)
-    clip2 = ImageSequenceClip(list(train_X_second_objects), fps=5)
-    clip2.write_gif('second_object.gif', fps=5)
-    quit()
 
     return (train_X_first_objects, train_X_second_objects, train_X_seqs, train_Y, test_X_first_objects, test_X_second_objects,
             test_X_seqs, test_Y, vid_shape, vocab_size, num_answers,
