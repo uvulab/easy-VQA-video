@@ -140,8 +140,6 @@ def setup(use_data_dir):
     test_X_first_objects = np.array(test_X_first_objects)
     test_X_second_objects = np.array(test_X_second_objects)
     """
-    print(f'train_video_ids[0]: {train_video_ids[0]}')
-    print(f'Does train_objects1[0] == train_objects2[0]?: {np.array_equal(train_objects1[0], train_objects2[0])}')
 
     #train_X_vids = np.array([train_vids[id] for id in train_video_ids])
     #test_X_vids = np.array([test_vids[id] for id in test_video_ids])
@@ -154,7 +152,15 @@ def setup(use_data_dir):
     print(f'Example model output: {train_Y[0]}')
 
     print(f'all_answers: {all_answers}')
-    print(f'train_Y[0]: {train_Y[0]}')
+    for i in range(8):
+        print(f'train_video_ids[i]: {train_video_ids[i]}')
+        print(f'train_Y[i]: {train_Y[i]')
+    # save the first two objects as a gif
+    from moviepy.editor import ImageSequenceClip
+    clip = ImageSequenceClip(list(train_X_first_objects), fps=5)
+    clip.write_gif('first_object.gif', fps=5)
+    clip2 = ImageSequenceClip(list(train_X_second_objects), fps=5)
+    clip2.write_gif('second_object.gif', fps=5)
     quit()
 
     return (train_X_first_objects, train_X_second_objects, train_X_seqs, train_Y, test_X_first_objects, test_X_second_objects,
