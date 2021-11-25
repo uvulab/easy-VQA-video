@@ -140,6 +140,8 @@ def setup(use_data_dir):
     test_X_first_objects = np.array(test_X_first_objects)
     test_X_second_objects = np.array(test_X_second_objects)
     """
+    print(f'train_video_ids[0]: {train_video_ids[0]}')
+    print(f'Does train_objects1[0] == train_objects2[0]?: {train_objects1[0] == train_objects2[0]}')
 
     #train_X_vids = np.array([train_vids[id] for id in train_video_ids])
     #test_X_vids = np.array([test_vids[id] for id in test_video_ids])
@@ -150,6 +152,9 @@ def setup(use_data_dir):
     train_Y = to_categorical(train_answer_indices)
     test_Y = to_categorical(test_answer_indices)
     print(f'Example model output: {train_Y[0]}')
+
+    print(f'all_answers: {all_answers}')
+    print(f'train_Y[0]: {train_Y[0]}')
 
     return (train_X_first_objects, train_X_second_objects, train_X_seqs, train_Y, test_X_first_objects, test_X_second_objects,
             test_X_seqs, test_Y, vid_shape, vocab_size, num_answers,
