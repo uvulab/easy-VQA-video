@@ -116,17 +116,17 @@ def setup(use_data_dir):
     print(f'Example question bag of words: {train_X_seqs[0]}')
 
     print('\n--- Creating model input images...')
+    """
     train_X_first_objects = np.array([train_objects1[id] for id in train_video_ids])
     train_X_second_objects = np.array([train_objects2[id] for id in train_video_ids])
     test_X_first_objects = np.array([test_objects1[id] for id in test_video_ids])
     test_X_second_objects = np.array([test_objects2[id] for id in test_video_ids])
-    #print(f'train_videa_ids type: {type(train_video_ids)}')
-    #train_X_vids = []
     """
+    
     train_X_first_objects = []
     train_X_second_objects = []
     for i in range(len(train_objects1)):
-        for j in range(14): # the number of questions (7 for each object)
+        for j in range(4): # the number of questions (2 for each object)
             train_X_first_objects.append(train_objects1[i])
             train_X_second_objects.append(train_objects2[i])
     train_X_first_objects = np.array(train_X_first_objects)
@@ -134,12 +134,12 @@ def setup(use_data_dir):
     test_X_first_objects = []
     test_X_second_objects = []
     for i in range(len(test_objects1)):
-        for j in range(14): # the number of questions (7 for each object)
+        for j in range(4): # the number of questions (2 for each object)
             test_X_first_objects.append(test_objects1[i])
             test_X_second_objects.append(test_objects2[i])
     test_X_first_objects = np.array(test_X_first_objects)
     test_X_second_objects = np.array(test_X_second_objects)
-    """
+    
 
     #train_X_vids = np.array([train_vids[id] for id in train_video_ids])
     #test_X_vids = np.array([test_vids[id] for id in test_video_ids])
@@ -151,10 +151,10 @@ def setup(use_data_dir):
     test_Y = to_categorical(test_answer_indices)
     print(f'Example model output: {train_Y[0]}')
 
-    print(f'all_answers: {all_answers}')
-    for i in range(8):
-        print(f'train_video_ids[i]: {train_video_ids[i]}')
-        print(f'train_Y[i]: {train_Y[i]}')
+    #print(f'all_answers: {all_answers}')
+    #for i in range(8):
+    #    print(f'train_video_ids[i]: {train_video_ids[i]}')
+    #    print(f'train_Y[i]: {train_Y[i]}')
 
     return (train_X_first_objects, train_X_second_objects, train_X_seqs, train_Y, test_X_first_objects, test_X_second_objects,
             test_X_seqs, test_Y, vid_shape, vocab_size, num_answers,
