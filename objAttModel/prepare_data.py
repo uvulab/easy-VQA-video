@@ -151,10 +151,12 @@ def setup(use_data_dir):
     test_Y = to_categorical(test_answer_indices)
     print(f'Example model output: {train_Y[0]}')
 
-    #print(f'all_answers: {all_answers}')
-    #for i in range(8):
-    #    print(f'train_video_ids[i]: {train_video_ids[i]}')
-    #    print(f'train_Y[i]: {train_Y[i]}')
+    print(f'all_answers: {all_answers}')
+    for i in range(12):
+        print(f'train_video_ids[i]: {train_video_ids[i]}')
+        print(f'train_X_seqs[i]: {train_X_seqs[i]}')
+        print(f'train_Y[i]: {train_Y[i]}')
+    quit()
 
     return (train_X_first_objects, train_X_second_objects, train_X_seqs, train_Y, test_X_first_objects, test_X_second_objects,
             test_X_seqs, test_Y, vid_shape, vocab_size, num_answers,
