@@ -117,6 +117,8 @@ def log_to_plots(filename='model_log.csv'):
     val_acc = log.iloc[:,3].values
     val_loss = log.iloc[:,4].values
 
+    print(val_acc)
+
     # Plot loss
     plt.clf()
     plt.cla()
