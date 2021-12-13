@@ -1,6 +1,6 @@
 # CS501
 
-This repository contains all relevant code for my CS501 project. It consists of two directories. The `singleObjectModel` directory is for generating the dataset with videos containing a single shape and training the corresponding model and the `objAttModel` directory is for generating the dataset with videos with two shapes and training the object attention model.
+This repository contains all relevant code for my CS501 project. In this project, I expanded on the easy-VQA dataset to create a dataset of simple, short-length videos and corresponding questions and answers about them. Each video consists of simple shapes such as a circle, triangle, or rectangle of varying colors moving in one of four directions for the duration of the video. Additionally, I implemented two models to perform VQA on two differnt types of videos. The first model answers questions about videos that contain a single shape and is found in the `singleObjectModel` directory. The second model performs VQA on videos that contain two shapes and is found in the `objAttModel` directory. Each of these directories contains the corresponding model's structure and dataset, as well as the code for regenerating either dataset.
 
 ## About the Datasets
 
@@ -54,7 +54,7 @@ from either the `singleObjectModel` or `objAttModel` directories.
 
 If you want to generate a larger dataset or generate videos with a different number of frames, simply modify the `NUM_TRAIN` and `NUM_TEST` or `NUM_FRAMES` constants in `singleObjectModel/gen_data/generate_data.py` and `objAttModel/gen_data/generate_data.py`.
 
-## Training the Models
+## About the Models
 
 To train either model use,
 
@@ -62,4 +62,16 @@ To train either model use,
 python3 train.py --use-data-dir
 ```
 
-within the directory of whichever model you want to train.
+within the directory of whichever model you want to train. When either model finishes training, they will create an epoch-loss and epoch-accuracy plot of the training history as well as a confusion matrix of the model's predictions on the test set after training. These plots will be saved as `model_loss.png`, `model_accuracy.png`, and `confusion_matrix.png` respectively.
+
+### The single object model
+
+The single object model is composed of a video encoder, a question encoder, and a merge module that combines the outputs from the video and question encoder.
+The video encoder is a CNN that is composed of alternating Conv3D and MaxPooling3D layers, from which the result is flattened and passed through a Dense layer to obtain the video embedding of length 32. Additionally, a Dropout layer that drops 40% of the outputs from the Dense layer is necessary to reduce overfitting.
+The question encoder takes the question about the video as a bag-of-words and feeds it through two Dense layers to get the question embedding of length 32.
+These two embeddings are then merged through element-wise multiplication before being pased through two more Dense layers with the final layer having the softmax activation function that provides the final output of the network.
+This model is capable of achieving an accuracy of ~95%.
+
+### The object attention model
+
+
