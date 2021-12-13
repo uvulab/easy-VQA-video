@@ -54,10 +54,12 @@ from either the `singleObjectModel` or `objAttModel` directories.
 
 If you want to generate a larger dataset or generate videos with a different number of frames, simply modify the `NUM_TRAIN` and `NUM_TEST` or `NUM_FRAMES` constants in `singleObjectModel/gen_data/generate_data.py` and `objAttModel/gen_data/generate_data.py`.
 
+## Training the Models
+
 To train either model use,
 
 ```shell
 python3 train.py --use-data-dir
 ```
 
-within the directory of whichever model you want to run.
+within the directory of whichever model you want to train.
