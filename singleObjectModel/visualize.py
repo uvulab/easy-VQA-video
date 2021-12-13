@@ -42,7 +42,7 @@ def plot_confusion(model, X_test, Y_test, labels, filename='confusion_matrix.png
     (unique, counts) = np.unique(Y_test, return_counts=True)
     frequencies = np.asarray(counts)
     frequencies = np.reshape(frequencies, (frequencies.shape[0], 1))
-    print(frequencies)
+    #print(frequencies)
 
     y_pred = model.predict(X_test)
     y_pred = np.argmax(y_pred,axis=1)
