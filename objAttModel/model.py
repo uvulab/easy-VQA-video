@@ -2,16 +2,15 @@ from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Input, Dense, Conv3D, MaxPooling3D, Flatten, Multiply, Add, Dropout
 from tensorflow.keras.optimizers import Adam
 
-def get_vid_encoder(vid_shape, big_model):
+def get_vid_encoder(vid_shape):
     # The CNN
     vid_input = Input(shape=vid_shape)
     x = Conv3D(8, 3, padding='same')(vid_input)
     x = MaxPooling3D(padding='same')(x)
     x = Conv3D(16, 3, padding='same')(x)
     x = MaxPooling3D(padding='same')(x)
-    if big_model:
-        x = Conv3D(32, 3, padding='same')(x)
-        x = MaxPooling3D(padding='same')(x)
+    x = Conv3D(32, 3, padding='same')(x)
+    x = MaxPooling3D(padding='same')(x)
     x = Flatten()(x)
     x = Dense(32, activation='tanh')(x)
     x = Dropout(0.4)(x)
@@ -42,11 +41,11 @@ def get_score_model():
     return Model(inputs=[vid_embedding, q_embedding], outputs=out, name='scoring_model')
 
 
-def build_model(vid_shape, vocab_size, num_answers, big_model):
+def build_model(vid_shape, vocab_size, num_answers):
     # Get video embeddings
     vid_input1 = Input(shape=vid_shape)
     vid_input2 = Input(shape=vid_shape)
-    vid_encoder = get_vid_encoder(vid_shape, big_model)
+    vid_encoder = get_vid_encoder(vid_shape)
     v1_embedding = vid_encoder(vid_input1)
     v2_embedding = vid_encoder(vid_input2)
 
