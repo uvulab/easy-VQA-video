@@ -25,26 +25,19 @@ checkpoint = ModelCheckpoint('model.h5', save_best_only=True)
 es = EarlyStopping(monitor='val_loss', mode='min', patience=5)
 csv_logger = CSVLogger('model_log.csv', append=False) # set append=True if continuing training
 
-#print('\n--- Training model...')
-#history = model.fit(
-#        [train_X_vids, train_X_seqs],
-#        train_Y,
-#        validation_data=([test_X_vids, test_X_seqs], test_Y),
-#        shuffle=True,
-#        epochs=500,
-#        callbacks=[checkpoint, es, csv_logger],
-#)
+print('\n--- Training model...')
+history = model.fit(
+        [train_X_vids, train_X_seqs],
+        train_Y,
+        validation_data=([test_X_vids, test_X_seqs], test_Y),
+        shuffle=True,
+        epochs=500,
+        callbacks=[checkpoint, es, csv_logger],
+)
 
 print('\n--- Generating plots...')
-#plot_loss(history)
-#plot_accuracy(history)
+plot_loss(history)
+plot_accuracy(history)
 
 test_Y = np.argmax(test_Y, axis=1)
 plot_confusion(model, [test_X_vids, test_X_seqs], test_Y, all_answers)
-
-#testXvid = test_X_vids[0]
-#testXseq = test_X_seqs[0]
-#testXvid = np.reshape(testXvid, (1,2,64,64,3))
-#testXseq = np.reshape(testXseq, (1, 25))
-#testInput = [testXvid, testXseq]
-#make_heatmap(model, testInput)
