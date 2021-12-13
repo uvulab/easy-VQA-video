@@ -1,6 +1,6 @@
 # CS501
 
-This repository contains all relevant code for my CS501 project. It consists of two directories. The singleObjectModel directory is for generating the dataset with videos containing a single shape and training the corresponding model and the objAttModel directory is for generating the dataset with videos with two shapes and training the object attention model.
+This repository contains all relevant code for my CS501 project. It consists of two directories. The `singleObjectModel` directory is for generating the dataset with videos containing a single shape and training the corresponding model and the `objAttModel` directory is for generating the dataset with videos with two shapes and training the object attention model.
 
 ## About the Datasets
 
