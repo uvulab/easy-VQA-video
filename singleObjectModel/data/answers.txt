@@ -1,0 +1,15 @@
+triangle
+brown
+blue
+teal
+yellow
+down
+circle
+right
+green
+rectangle
+up
+black
+gray
+left
+red
