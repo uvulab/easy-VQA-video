@@ -23,9 +23,11 @@ NUM_FRAMES = 10
 NUM_SHAPES_PER_VID = 2
 
 for i in range(NUM_TRAIN):
-    os.makedirs(f'data/train/videos/video{i}')
+    if not os.path.exists(f'data/train/videos/video{i}'):
+        os.makedirs(f'data/train/videos/video{i}')
 for i in range(NUM_TEST):
-    os.makedirs(f'data/test/videos/video{i}')
+    if not os.path.exists(f'data/test/videos/video{i}'):
+        os.makedirs(f'data/test/videos/video{i}')
 
 #lastShape = choice(shapes)
 #lastColor= choice(colors)
