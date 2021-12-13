@@ -2,16 +2,15 @@ from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Input, Dense, Conv3D, MaxPooling3D, Flatten, Multiply, Dropout
 from tensorflow.keras.optimizers import Adam
 
-def build_model(vid_shape, vocab_size, num_answers, big_model):
+def build_model(vid_shape, vocab_size, num_answers):
   # The CNN
   vid_input = Input(shape=vid_shape)
   x1 = Conv3D(8, (2,3,3), padding='same')(vid_input) # originally 8
   x1 = MaxPooling3D(pool_size=(1,2,2), padding='same')(x1)
   x1 = Conv3D(16, (2,3,3), padding='same')(x1) # originally 16 and padding='same'
   x1 = MaxPooling3D(pool_size=(2,2,2), padding='same')(x1)
-  if big_model:
-    x1 = Conv3D(32, 3, padding='same')(x1)
-    x1 = MaxPooling3D(padding='same')(x1)
+  x1 = Conv3D(32, 3, padding='same')(x1)
+  x1 = MaxPooling3D(padding='same')(x1)
   x1 = Flatten()(x1)
   x1 = Dense(32, activation='tanh')(x1)
   x1 = Dropout(0.4)(x1)

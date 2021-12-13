@@ -10,12 +10,9 @@ import numpy as np
 
 # Support command-line options
 parser = argparse.ArgumentParser()
-parser.add_argument('--big-model', action='store_true', help='Use the bigger model with more conv layers')
 parser.add_argument('--use-data-dir', action='store_true', help='Use custom data directory, at /data')
 args = parser.parse_args()
 
-if args.big_model:
-    print('Using big model')
 if args.use_data_dir:
     print('Using data directory')
 
@@ -23,7 +20,7 @@ if args.use_data_dir:
 train_X_vids, train_X_seqs, train_Y, test_X_vids, test_X_seqs, test_Y, vid_shape, vocab_size, num_answers, all_answers, _, _ = setup(args.use_data_dir)
 
 print('\n--- Building model...')
-model = build_model(vid_shape, vocab_size, num_answers, args.big_model)
+model = build_model(vid_shape, vocab_size, num_answers)
 checkpoint = ModelCheckpoint('model.h5', save_best_only=True)
 es = EarlyStopping(monitor='val_loss', mode='min', patience=5)
 csv_logger = CSVLogger('model_log.csv', append=False) # set append=True if continuing training
